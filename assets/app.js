@@ -35,15 +35,15 @@ $("#submit").on("click", function (event) {
 
     trainName = $("#train-name").val();
     destination = $("#destination").val();
-    //trainStart = moment($("#train-start").val().trim(),"MM/DD/YYYY").format("X");
+    trainStart = moment($("#train-start").val().trim(),"MM/DD/YYYY").format("X");
     frequency = $("#frequency").val();
-    nextArrival = moment($("#train-start").val().trim(),"MM/DD/YYYY").format("X");
+    nextArrival = "05:35pm"
     minutesAway = "16";
 
     var newEmp = {
         name: trainName,
         destination: destination,
-        //start: trainStart,
+        start: trainStart,
         rate: frequency
     };
 
@@ -77,14 +77,39 @@ $("#submit").on("click", function (event) {
 
 database.ref().on("child_added", function(childSnapshot){
 
-    var snapName = childSnapshot.val().name;
-    var snapRole = childSnapshot.val().role;
-    var snapStart = childSnapshot.val().start;
-    var snapRate = childSnapshot.val().rate;
+    var snapName = childSnapshot.val().trainName;
+    var snapRole = childSnapshot.val().destination;
+    var snapStart = childSnapshot.val().frequency;
+    var snapStart = childSnapshot.val().trainStart;
+    
 
+    console.log(trainName)
+    console.log(destination)
+    console.log(frequency)
+    console.log(trainStart)
 
 })
 
+var tFrequency = 14;
+var firstTime = "03:30";
+
+var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+console.log(firstTimeConverted);
+
+var currentTime = moment();
+console.log("Current Time: " + moment(currentTime).format("hh:mm"));
+
+var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+console.log("DIFFERENCE IN TIME: " + diffTime);
+
+var tRemainder = diffTime % tFrequency;
+console.log(tRemainder);
+
+var tMinutesTillTrain = tFrequency - tRemainder;
+console.log("Minutes Until Train: " + tMinutesTillTrain);
+
+var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
 
 // months  = todays date - start date (rounding and half months)
 // take monthly rate x months
