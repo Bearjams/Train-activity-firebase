@@ -1,0 +1,23 @@
+.card{
+    margin-left: 75px;
+    margin-right: 75px;
+}
+h1{
+    text-align: center;
+    
+}
+p{
+    text-align: center;
+    
+}
+.jumbotron{
+    color: white;
+    background-color: black;
+    
+}
+.jumbotron-fluid{
+    background-color: black;
+    margin-left: 75px;
+    margin-right: 75px;
+    
+}
