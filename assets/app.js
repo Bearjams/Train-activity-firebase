@@ -4,12 +4,14 @@
 // rate
 
 var config = {
-    apiKey: "AIzaSyDxQqkGa3AKrcGmGVFalJe40g4hdzADf6w",
-    authDomain: "coder-bay-views.firebaseapp.com",
-    databaseURL: "https://coder-bay-views.firebaseio.com",
-    storageBucket: "coder-bay-views.appspot.com",
-    messagingSenderId: "17945436261"
-  };
+    apiKey: "AIzaSyDkCc0_OzNn5XTIgJsIUjMKtmly586r_Oc",
+    authDomain: "test-project-a9ca6.firebaseapp.com",
+    databaseURL: "https://test-project-a9ca6.firebaseio.com",
+    projectId: "test-project-a9ca6",
+    storageBucket: "test-project-a9ca6.appspot.com",
+    messagingSenderId: "634675865281",
+    appId: "1:634675865281:web:e5a69ac461e1016cc65640"
+};
 
 firebase.initializeApp(config);
 // Assign the reference to the database to a variable named 'database'
@@ -48,7 +50,7 @@ $("#submit").on("click", function (event) {
     };
 
     database.ref().push(newEmp);
-
+    
     newRow = $("<tr>");
     //var newCol = $("<td>");
     var trainCol = $("<td>").text(trainName);
@@ -77,16 +79,16 @@ $("#submit").on("click", function (event) {
 
 database.ref().on("child_added", function(childSnapshot){
 
-    var snapName = childSnapshot.val().trainName;
+    var snapName = childSnapshot.val().name;
     var snapRole = childSnapshot.val().destination;
-    var snapStart = childSnapshot.val().frequency;
-    var snapStart = childSnapshot.val().trainStart;
+    var snapStart = childSnapshot.val().start;
+    var snapRate = childSnapshot.val().rate;
     
 
-    console.log(trainName)
-    console.log(destination)
-    console.log(frequency)
-    console.log(trainStart)
+    console.log(snapName)
+    console.log(snapRole)
+    console.log(snapStart)
+    console.log(snapRate)
 
 })
 
