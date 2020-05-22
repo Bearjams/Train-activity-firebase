@@ -26,10 +26,6 @@ var nextArrival = "";
 var minutesAway = "";
 var tFrequency = $("#frequency").val();;
 var firstTime = $("#train-start").val().trim();;
-var firstTimeConverted;
-var currentTime;
-var diffTime;
-var tRemainder;
 var tMinutesTillTrain;
 var nextTrain;
 // database.ref().on("value", function (snapshot) {
@@ -43,46 +39,36 @@ $("#submit").on("click", function (event) {
 
     
 
-    trainName = $("#train-name").val();
-    destination = $("#destination").val();
-    //trainStart = $("#train-start").val().trim();
-    //frequency = $("#frequency").val();
+    trainName = $("#train-name").val().trim();
+    destination = $("#destination").val().trim();
     firstTime = $("#train-start").val().trim();
     tFrequency = $("#frequency").val().trim();
-    var tMinutesTillTrain = tFrequency - tRemainder;
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    //nextArrival = nextTrain
-    //minutesAway = tMinutesTillTrain;
-
+   
 
     var newEmp = {
         name: trainName,
-        destination: destination,
-        //arrival: nextTrain,
+        destination: destination,       
         start: firstTime,
         rate: tFrequency
     };
 
     database.ref().push(newEmp);
 
-    newRow = $("<tr>");
-    //var newCol = $("<td>");
-    var trainCol = $("<td>").text(trainName);
-    var destinationCol = $("<td>").text(destination);
-    //var startCol = $("<td>").text(trainStart);
-    var rateCol = $("<td>").text(tFrequency);
-    var nextArrivalCol = $("<td>").text(nextTrain);
-    var minutesAwayCol = $("<td>").text(tMinutesTillTrain);
+    // newRow = $("<tr>");
+    // var trainCol = $("<td>").text(trainName);
+    // var destinationCol = $("<td>").text(destination);
+    // var rateCol = $("<td>").text(tFrequency);
+    // var nextArrivalCol = $("<td>").text(nextTrain);
+    // var minutesAwayCol = $("<td>").text(tMinutesTillTrain);
 
-    newRow.append(trainCol);
-    newRow.append(destinationCol);
-    //newRow.append(startCol);
-    newRow.append(rateCol);
-    newRow.append(nextArrivalCol);
-    newRow.append(minutesAwayCol);
+    // newRow.append(trainCol);
+    // newRow.append(destinationCol);
+    // newRow.append(rateCol);
+    // newRow.append(nextArrivalCol);
+    // newRow.append(minutesAwayCol);
 
 
-    $("#table-body").append(newRow)
+    // $("#table-body").append(newRow)
 
 
 
@@ -94,14 +80,18 @@ $("#submit").on("click", function (event) {
 database.ref().on("child_added", function (childSnapshot) {
 
     var snapName = childSnapshot.val().name;
-    var snapRole = childSnapshot.val().destination;
+    var snapDest = childSnapshot.val().destination;
     //var snapArrival = childSnapshot.val().arrival;
     var snapStart = childSnapshot.val().start;
     var snapRate = childSnapshot.val().rate;
 
+    var snapRate;
+
+    var snapStart = 0;
+
 
     console.log(snapName)
-    console.log(snapRole)
+    console.log(snapDest)
     console.log(snapStart)
     console.log(snapRate)
     //console.log(snapArrival)
@@ -123,6 +113,8 @@ database.ref().on("child_added", function (childSnapshot) {
 
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
+
+    $("#table-body > tbody").append("<tr><td>" + snapName + "</td><td>" + snapDest + "</td><td>" + snapRate + "</td><td>" + moment(nextTrain).format("HH:mm") + "</td><td>" + tMinutesTillTrain + "</td></tr>")
 
 })
 
